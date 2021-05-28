@@ -11,11 +11,11 @@ namespace Controller {
     //%block
     export function configurSender(): void{
         radio.setGroup(1);
-        input.onButtonPressed(Button.A, Controller.SendOversteerLeft);
-        input.onButtonPressed(Button.B, Controller.SendOversteerRight);
+        input.onButtonPressed(Button.A, SendOversteerLeft);
+        input.onButtonPressed(Button.B, SendOversteerRight);
     }
 
-    export function SendOversteerLeft() {
+    export function SendOversteerLeft(): void {
         radio.sendString("left");
     }
 
@@ -28,15 +28,52 @@ namespace Controller {
         radio.onReceivedString(leftOrRight);
     }
     
-    export function leftOrRight(recivedSring: string):void{
-        if(recivedSring.compare("left")){
+    export function leftOrRight(recivedString: string):void{
+        if(recivedString.compare("left")){
             PaintRobotSimpel.left(45);
+            basic.pause(1000);
+            
+
         }
-        else if(recivedSring.compare("right")){
+        else if(recivedString.compare("right")){
             PaintRobotSimpel.right(45);
+            basic.pause(1000);
+
         }
         else{
             PaintRobotSimpel.setAngleStraight();
         }
     }
+    function returnToOrigin(){
+        switch(PaintRobotSimpel.getDirection()){
+            case 1:
+            basic.showLeds(`
+            . . # . .
+            . # # . .
+            # # # # #
+            . # # . .
+            . . # . .
+    `       )
+            break;
+            case 2:
+            basic.showLeds(`
+            . . # . .
+            . # # # .
+            # # # # #
+            . . # . .
+            . . # . .
+    `       )
+            break;
+            case 3:
+            basic.showLeds(`
+            . . # . .
+            . . # # .
+            # # # # #
+            . . # # .
+            . . # . .
+    `       )
+            break;
+        }
+    }
+
 }
