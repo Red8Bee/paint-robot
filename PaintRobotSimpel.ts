@@ -5,7 +5,7 @@
 /**
  * Custom blocks
  */
-//% weight=100 color=#46ab3c icon=""
+//% weight=100 color=#4a0087 icon=""
 namespace PaintRobotSimpel {
     //%block="zeichne"
     export function drawThis(a: () => void) {

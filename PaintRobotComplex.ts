@@ -5,7 +5,7 @@
 /**
  * Custom blocks
  */
-//% weight=100 color=#46ab3c icon=""
+//% weight=100 color=#00875a icon=""
 namespace PaintRobotComplex {
 
     //%block="Fahre für $time Sekunden Geradeaus"
@@ -17,7 +17,7 @@ namespace PaintRobotComplex {
         PaintRobotSimpel.stop();
     }
 
-    //%block="Fahre linkskurve "
+    //%block="Fahre $time Sekunden, $angle ° Links "
     export function makeCuveLeft(angle: number, time: number) {
         let runtime = time * 1000;
         PaintRobotSimpel.left(angle);
@@ -26,7 +26,7 @@ namespace PaintRobotComplex {
         PaintRobotSimpel.stop();
     }
 
-    //%block="Drive right Curve with $angle ° for $time Seconds"
+    //%block="Fahre $time Sekunden, $angle ° Rechts"
     export function makeCurveRight(angle: number, time: number): void {
         let runtime = time * 1000;
         PaintRobotSimpel.right(angle);

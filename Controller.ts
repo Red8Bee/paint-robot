@@ -5,10 +5,11 @@
 /**
  * Custom blocks
  */
-//% weight=100 color=#46ab3c icon=""
+//% weight=100 color=#870020 icon=""
 namespace Controller {
 
-    export function configurSender(){
+    //%block
+    export function configurSender(): void{
         radio.setGroup(1);
         input.onButtonPressed(Button.A, Controller.SendOversteerLeft);
         input.onButtonPressed(Button.B, Controller.SendOversteerRight);
@@ -22,7 +23,6 @@ namespace Controller {
         radio.sendString("right");
     }
 
-    //%block
     export function configurReciver(){
         radio.setGroup(1);
         radio.onReceivedString(leftOrRight);
