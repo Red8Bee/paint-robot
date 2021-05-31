@@ -16,6 +16,7 @@ namespace Controller {
     }
 
     export function SendOversteerLeft(): void {
+        music.playTone(Note.C, music.beat());
         radio.sendString("left");
         basic.showLeds(`
             . . # . .
@@ -28,6 +29,7 @@ namespace Controller {
 
     export function SendOversteerRight() {
         radio.sendString("right");
+        music.playTone(Note.D, music.beat());
         basic.showLeds(`
             . . # . .
             . . # # .
@@ -44,12 +46,14 @@ namespace Controller {
     
     export function leftOrRight(recivedString: string):void{
         if(recivedString.compare("left")){
+            music.playTone(Note.CSharp, music.beat())
             PaintRobotSimpel.left(45);
             basic.pause(1000);
             returnToOrigin()
 
         }
         else if(recivedString.compare("right")){
+            music.playTone(Note.D4, music.beat())
             PaintRobotSimpel.right(45);
             basic.pause(1000);
             returnToOrigin()
@@ -59,6 +63,7 @@ namespace Controller {
         }
     }
     function returnToOrigin(){
+        music.playTone(Note.A, music.beat())
         switch(PaintRobotSimpel.getDirection()){
             case 3:
             basic.showLeds(`
@@ -68,6 +73,7 @@ namespace Controller {
             . # # . .
             . . # . .
     `       )
+            music.playTone(Note.G, music.beat())
             break;
             case 2:
             basic.showLeds(`
@@ -77,6 +83,7 @@ namespace Controller {
             . . # . .
             . . # . .
     `       )
+            music.playTone(Note.E, music.beat())
             break;
             case 1:
             basic.showLeds(`
@@ -86,6 +93,7 @@ namespace Controller {
             . . # # .
             . . # . .
     `       )
+            music.playTone(Note.F, music.beat())
             break;
         }
     }

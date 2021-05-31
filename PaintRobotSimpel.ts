@@ -18,10 +18,9 @@ namespace PaintRobotSimpel {
         return direction; 
     }
     //%block="zeichne"
-    export function drawThis(a: () => void) {
+    export function drawThis(draw: () => void) {
         Controller.configurReciver();
-        Controller.configurSender();
-        a();
+        draw();
     }
 
     //%block="fahr"
