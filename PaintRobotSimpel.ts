@@ -11,8 +11,8 @@ namespace PaintRobotSimpel {
    
     let direction: number;
     
-    export function setDirection(before: number){
-        direction = before;
+    export function setDirection(newDirection: number){
+        direction = newDirection;
     }
     export function getDirection():number {
         return direction; 
@@ -38,14 +38,15 @@ namespace PaintRobotSimpel {
         setDirection(1);
         let nangle = 90 - angle;
         servos.P1.setAngle(nangle);
-        basic.showLeds(`
-    . . # . .
-    . # # . .
-    # # # # #
-    . # # . .
-    . . # . .
-    `);
+        basic.showNumber(1);
 
+    }
+
+    //%block="Geradeaus"
+    export function setAngleStraight(): void {
+        setDirection(2);
+        servos.P1.setAngle(90);
+        basic.showNumber(2);
     }
 
     //%block="Einschlagswinkel auf &angle °  right"
@@ -54,25 +55,6 @@ namespace PaintRobotSimpel {
         setDirection(3);
         let nangle = 90 + angle;
         servos.P1.setAngle(nangle);
-        basic.showLeds(`
-    . . # . .
-    . . # # .
-    # # # # #
-    . . # # .
-    . . # . .
-    `);
-    }
-
-    //%block="Geradeaus"
-    export function setAngleStraight(): void {
-        setDirection(2);
-        servos.P1.setAngle(90);
-        basic.showLeds(`
-    . . # . .
-    . # # # .
-    # # # # #
-    . . # . .
-    . . # . .
-    `);
+        basic.showNumber(3);
     }
 }
