@@ -7,16 +7,20 @@
  */
 //% weight=100 color=#4a0087 icon=""
 namespace PaintRobotSimpel {
-    //%block="zeichne"
+    
+   
     let direction: number;
+    
     export function setDirection(before: number){
         direction = before;
     }
     export function getDirection():number {
         return direction; 
     }
+    //%block="zeichne"
     export function drawThis(a: () => void) {
         Controller.configurReciver();
+        Controller.configurSender();
         a();
     }
 

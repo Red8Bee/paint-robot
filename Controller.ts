@@ -17,10 +17,24 @@ namespace Controller {
 
     export function SendOversteerLeft(): void {
         radio.sendString("left");
+        basic.showLeds(`
+            . . # . .
+            . # # . .
+            # # # # #
+            . # # . .
+            . . # . .
+    `       )
     }
 
     export function SendOversteerRight() {
         radio.sendString("right");
+        basic.showLeds(`
+            . . # . .
+            . . # # .
+            # # # # #
+            . . # # .
+            . . # . .
+    `       )
     }
 
     export function configurReciver(){
@@ -32,13 +46,13 @@ namespace Controller {
         if(recivedString.compare("left")){
             PaintRobotSimpel.left(45);
             basic.pause(1000);
-            
+            returnToOrigin()
 
         }
         else if(recivedString.compare("right")){
             PaintRobotSimpel.right(45);
             basic.pause(1000);
-
+            returnToOrigin()
         }
         else{
             PaintRobotSimpel.setAngleStraight();
