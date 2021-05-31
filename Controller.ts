@@ -60,7 +60,7 @@ namespace Controller {
     }
     function returnToOrigin(){
         switch(PaintRobotSimpel.getDirection()){
-            case 1:
+            case 3:
             basic.showLeds(`
             . . # . .
             . # # . .
@@ -78,7 +78,7 @@ namespace Controller {
             . . # . .
     `       )
             break;
-            case 3:
+            case 1:
             basic.showLeds(`
             . . # . .
             . . # # .
