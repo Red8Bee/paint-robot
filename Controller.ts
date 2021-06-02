@@ -11,68 +11,56 @@ namespace Controller {
     //%block
     export function configurSender(): void{
         radio.setGroup(1);
-        input.onButtonPressed(Button.A, SendOversteerLeft);
-        input.onButtonPressed(Button.B, SendOversteerRight);
+        input.onButtonPressed(Button.A, function () {
+            radio.sendString("left");
+        });
+        input.onButtonPressed(Button.B, function () {
+            radio.sendString("right");
+        });
     }
 
-    export function SendOversteerLeft(): void {
-        radio.sendString("left");
-        basic.showLeds(`
-            . . # . .
-            . # # . .
-            # # # # #
-            . # # . .
-            . . # . .
-    `       )
-    }
-
-    export function SendOversteerRight() {
-        radio.sendString("right");
-        basic.showLeds(`
-            . . # . .
-            . . # # .
-            # # # # #
-            . . # # .
-            . . # . .
-    `       )
-    }
-
-    export function configurReciver(){
+    export function configurReciver(): void{
         radio.setGroup(1);
-        radio.onReceivedString(leftOrRight);
-    }
-    
-    export function leftOrRight(recivedString: string):void{
-        if(recivedString.compare("left")){
-            music.playTone(Note.CSharp, music.beat())
-            PaintRobotSimpel.left(45);
-            basic.pause(1000);
-            returnToOrigin()
+        radio.onReceivedString(function (receivedString: string) {
+            if(receivedString.compare("left")){
+                servos.P1.setAngle(90-40);
+                basic.pause(1000);
+                backToOrign();
 
-        }
-        else if(recivedString.compare("right")){
-            music.playTone(Note.D4, music.beat())
-            PaintRobotSimpel.right(45);
-            basic.pause(1000);
-            returnToOrigin()
-        }
-        else{
-            PaintRobotSimpel.setAngleStraight();
-        }
+            }
+            else if(receivedString.compare("right")){
+                servos.P1.setAngle(90+40);
+                basic.pause(1000);
+                backToOrign();
+            }
+        });
     }
-    function returnToOrigin(){
-        music.playTone(Note.A, music.beat())
-        switch(PaintRobotSimpel.getDirection()){
-            case 1:
-                basic.showNumber(1);
+
+    export function backToOrign(){
+        basic.showLeds(`
+        . . . . .
+        . . . . .
+        . . # . .
+        . . . . .
+        . . . . .
+        `)
+        let goBackToThisDirection = PaintRobotSimpel.direction;
+        let angle = PaintRobotSimpel.angle;
+        let oldLeftAngle = 90 - angle;
+        let oldRightAngle = 90 + angle;
+         switch(goBackToThisDirection){
+            case 0:
+                PaintRobotSimpel.left(oldLeftAngle);
+                basic.showNumber(0);
                 break;
             case 2:
-                basic.showNumber(2);
+                PaintRobotSimpel.setAngleStraight();
+                basic.showNumber(1);
                 break;
             case 3:
-                basic.showNumber(3);
+                PaintRobotSimpel.right(oldRightAngle);
+                basic.showNumber(2);
                 break;
-        }
+        } 
     }
-
 }
