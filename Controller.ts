@@ -23,12 +23,14 @@ namespace Controller {
         radio.setGroup(1);
         radio.onReceivedString(function (receivedString: string) {
             if(receivedString.compare("left")){
+                basic.showArrow(ArrowNames.East);
                 servos.P1.setAngle(90-40);
                 basic.pause(1000);
                 backToOrign();
 
             }
             else if(receivedString.compare("right")){
+                basic.showArrow(ArrowNames.West);
                 servos.P1.setAngle(90+40);
                 basic.pause(1000);
                 backToOrign();
@@ -53,11 +55,11 @@ namespace Controller {
                 PaintRobotSimpel.left(oldLeftAngle);
                 basic.showNumber(0);
                 break;
-            case 2:
+            case 1:
                 PaintRobotSimpel.setAngleStraight();
                 basic.showNumber(1);
                 break;
-            case 3:
+            case 2:
                 PaintRobotSimpel.right(oldRightAngle);
                 basic.showNumber(2);
                 break;

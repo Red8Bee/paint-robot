@@ -15,7 +15,6 @@ namespace PaintRobotSimpel {
     //%block="zeichne"
     export function drawThis(draw: () => void) {
         Controller.configurReciver();
-        Controller.configurSender();
         draw();
     }
 
@@ -23,6 +22,7 @@ namespace PaintRobotSimpel {
     export function go(): void {
         servos.P0.run(50);
     }
+
     //%block="stop"
     export function stop(): void {
         servos.P0.run(0);
@@ -54,7 +54,5 @@ namespace PaintRobotSimpel {
         let nangle = 90 + angle;
         servos.P1.setAngle(nangle);
         // basic.showNumber(3);
-    }
-
-    
+    }   
 }
