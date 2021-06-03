@@ -32,7 +32,7 @@ namespace PaintRobotSimpel {
     //% angle.min=1 angle.max=90
     export function left(newAngle: number): void {
         basic.showArrow(ArrowNames.West);
-        direction = 1;
+        direction = 0;
         angle = newAngle;
         let nangle = 90 - angle;
         servos.P1.setAngle(nangle);
@@ -50,6 +50,7 @@ namespace PaintRobotSimpel {
     //%block="Einschlagswinkel auf &angle °  right"
     //% angle.min=1 angle.max=90
     export function right(newAngle: number): void {
+         basic.showArrow(ArrowNames.East);
         direction = 2;
         angle = newAngle;
         let nangle = 90 + angle;
