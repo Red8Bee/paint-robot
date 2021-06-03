@@ -53,15 +53,12 @@ namespace Controller {
          switch(goBackToThisDirection){
             case 0:
                 PaintRobotSimpel.left(oldLeftAngle);
-                basic.showNumber(0);
                 break;
             case 1:
                 PaintRobotSimpel.setAngleStraight();
-                basic.showNumber(1);
                 break;
             case 2:
                 PaintRobotSimpel.right(oldRightAngle);
-                basic.showNumber(2);
                 break;
         } 
     }
