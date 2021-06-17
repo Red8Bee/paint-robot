@@ -13,23 +13,12 @@ namespace PaintRobotSimpel {
     export let angle: number;
 
     
-    //%block="zeichne"
-    export function drawThis(draw: () => void) {
-        Controller.configurReciver();
-        PaintRobotSimpel.setAngleStraight();
-        PaintRobotSimpel.penDown();
-        PaintRobotSimpel.go();
-        draw();
-        PaintRobotSimpel.stop();
-    }
-
     //%block="fahr"
-    export function driveThis(drive: () => void){
+    export function drive(path: () => void) {
         Controller.configurReciver();
         PaintRobotSimpel.setAngleStraight();
-        PaintRobotSimpel.penUp();
         PaintRobotSimpel.go();
-        drive();
+        path();
         PaintRobotSimpel.stop();
     }
 
