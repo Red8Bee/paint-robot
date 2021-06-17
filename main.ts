@@ -1,1 +1,3 @@
-
+PaintRobotSimpel.driveThis(function () {
+	
+})

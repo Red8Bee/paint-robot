@@ -18,6 +18,7 @@ namespace PaintRobotComplex {
     }
 
     //%block="Fahre $time Sekunden, $angle ° Links "
+    //% angle.min=1 angle.max=90
     export function makeCuveLeft(angle: number, time: number) {
         let runtime = time * 1000;
         PaintRobotSimpel.left(angle);
@@ -27,6 +28,7 @@ namespace PaintRobotComplex {
     }
 
     //%block="Fahre $time Sekunden, $angle ° Rechts"
+    //% angle.min=1 angle.max=90
     export function makeCurveRight(angle: number, time: number): void {
         let runtime = time * 1000;
         PaintRobotSimpel.right(angle);
@@ -35,5 +37,3 @@ namespace PaintRobotComplex {
         PaintRobotSimpel.stop();
     }
 }
-
-

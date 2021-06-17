@@ -12,23 +12,38 @@ namespace PaintRobotSimpel {
     export let direction: number;
     export let angle: number;
 
+    
     //%block="zeichne"
     export function drawThis(draw: () => void) {
         Controller.configurReciver();
+        PaintRobotSimpel.setAngleStraight();
+        PaintRobotSimpel.penDown();
+        PaintRobotSimpel.go();
         draw();
+        PaintRobotSimpel.stop();
     }
 
     //%block="fahr"
-    export function go(): void {
+    export function driveThis(drive: () => void){
+        Controller.configurReciver();
+        PaintRobotSimpel.setAngleStraight();
+        PaintRobotSimpel.penUp();
+        PaintRobotSimpel.go();
+        drive();
+        PaintRobotSimpel.stop();
+    }
+
+    //%block="Go"
+    export function go():void{
         servos.P0.run(50);
     }
 
-    //%block="stop"
+    //%block="Stop"
     export function stop(): void {
         servos.P0.run(0);
     }
 
-    //%block="Einschlagswinkel auf &angle ° Links"
+    //%block="Einschlagswinkel auf $newAngle ° Links"
     //% angle.min=1 angle.max=90
     export function left(newAngle: number): void {
         basic.showArrow(ArrowNames.West);
@@ -47,7 +62,7 @@ namespace PaintRobotSimpel {
         // basic.showNumber(2);
     }
 
-    //%block="Einschlagswinkel auf &angle °  right"
+    //%block="Einschlagswinkel auf $newAngle °  right"
     //% angle.min=1 angle.max=90
     export function right(newAngle: number): void {
          basic.showArrow(ArrowNames.East);
@@ -56,5 +71,15 @@ namespace PaintRobotSimpel {
         let nangle = 90 + angle;
         servos.P1.setAngle(nangle);
         // basic.showNumber(3);
-    }   
+    }  
+
+    //%block="Kreide absetzen"
+    export function penDown(): void{
+        servos.P2.setAngle(0);
+    }
+
+    //%block="Kreide hochheben";
+    export function penUp(): void{
+        servos.P2.setAngle(185);
+    }
 }
