@@ -13,7 +13,10 @@ namespace PaintRobotSimpel {
     export let angle: number;
 
     
-    //%block="fahr"
+    //%block="Draw"
+    //%block.loc.de="Zeichne"
+    //%block.loc.fr="Dessiner"
+    //%block.loc.it="Disegnare"
     export function drive(path: () => void) {
         Controller.configurReciver();
         PaintRobotSimpel.setAngleStraight();
@@ -22,17 +25,26 @@ namespace PaintRobotSimpel {
         PaintRobotSimpel.stop();
     }
 
-    //%block="Go"
+    //%block="Drive"
+    //%block.loc.de="Fahr"
+    //%block.loc.fr="Conduire"
+    //%block.loc.it="Guidare"
     export function go():void{
         servos.P0.run(50);
     }
 
     //%block="Stop"
+    //%block.loc.de="Stop"
+    //%block.loc.fr="arrêter"
+    //%block.loc.it="fermare"
     export function stop(): void {
         servos.P0.run(0);
     }
 
-    //%block="Einschlagswinkel auf $newAngle ° Links"
+    //%block="Turn steering $newAngle ° left"
+    //%block.loc.de="Lenkung ° links drehen "
+    //%block.loc.fr="tourner le volant $newAngle ° à gauche"
+    //%block.loc.it="girare lo sterzo $newAngle ° sinistra"
     //% angle.min=1 angle.max=90
     export function left(newAngle: number): void {
         basic.showArrow(ArrowNames.West);
@@ -43,7 +55,10 @@ namespace PaintRobotSimpel {
         // basic.showNumber(1);
     }
 
-    //%block="Geradeaus"
+    //%block="Straight"
+    //%block.loc.de="Geradeaus"
+    //%block.loc.fr="tout Droit"
+    //%block.loc.it="Dritto"
     export function setAngleStraight(): void {
         direction = 1;
         angle = 90;
@@ -51,7 +66,10 @@ namespace PaintRobotSimpel {
         // basic.showNumber(2);
     }
 
-    //%block="Einschlagswinkel auf $newAngle °  right"
+    //%block="Turn steering °right"
+    //%block.loc.de="Lenkung ° rechts drehen"
+    //%block.loc.fr="tourner le volant °à droite"
+    //%block.loc.it="girare lo sterzo °destra"
     //% angle.min=1 angle.max=90
     export function right(newAngle: number): void {
          basic.showArrow(ArrowNames.East);
@@ -62,12 +80,18 @@ namespace PaintRobotSimpel {
         // basic.showNumber(3);
     }  
 
-    //%block="Kreide absetzen"
+    //%block="Put down the chalk"
+    //%block.loc.de="Kreide absetzen"
+    //%block.loc.fr="Pose la craie"
+    //%block.loc.it="Metti giù il gesso"
     export function penDown(): void{
         servos.P2.setAngle(0);
     }
 
-    //%block="Kreide hochheben";
+    //%block="Lift up chalk";
+    //%block.loc.de="Kreide anheben"
+    //%block.loc.fr="Soulevez la craie"
+    //%block.loc.it="Alza il gesso"
     export function penUp(): void{
         servos.P2.setAngle(185);
     }

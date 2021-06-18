@@ -8,7 +8,10 @@
 //% weight=100 color=#870020 icon=""
 namespace Controller {
 
-    //%block
+    //%block="Configure remote control"
+    //%block.loc.fr="Configurer la télécommande"
+    //%block.loc.it="Configura il telecomando"
+    //%block.loc.de="Fernsteuerung konfigurieren"
     export function configurSender(): void{
         radio.setGroup(1);
         input.onButtonPressed(Button.A, function () {
@@ -39,13 +42,6 @@ namespace Controller {
     }
 
     export function backToOrign(){
-        basic.showLeds(`
-        . . . . .
-        . . . . .
-        . . # . .
-        . . . . .
-        . . . . .
-        `)
         let goBackToThisDirection = PaintRobotSimpel.direction;
         let angle = PaintRobotSimpel.angle;
         let oldLeftAngle = 90 - angle;
