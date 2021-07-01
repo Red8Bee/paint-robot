@@ -5,38 +5,69 @@
 /**
  * Custom blocks
  */
-//% weight=100 color=#00875a icon=""
-namespace PaintRobotComplex {
+//% weight=100 color=#4a0087 icon=""
+namespace PaintRobotTest {
 
-    //%block="Drive straight ahead for $time seconds"
-    //%block.loc.de="Fahre geradeaus für $time Sekunden"
-    //%block.loc.fr="Continuez tout droit pendant $time secondes"
-    //%block.loc.it="Prosegui dritto per $time secondi"
-    export function driveStraightFor(time: number): void {
-        let runtime = time * 1000;
-        PaintRobotSimpel.setAngleStraight();
-        basic.pause(runtime);
+    // witdth of car in m
+    let carWidth=0.09;
+    //max drive Speed in m/s
+    let maxSpeed = 0.4712;
+    
+    
+    //%block
+    //angle.min=1 angle.max=359
+    export function diferencialLeft(angle: number, radius: number){
+            basic.showArrow(ArrowNames.West); 
+            servos.P0.run(innerPercent(angle, radius));
+            servos.P1.run(outerPercent(angle, radius));
+            basic.pause(driveTime(angle,radius))
     }
 
-    //%block="Drive $time seconds, $angle ° to the left"
-    //%block.loc.de="Fahr $time Sekunden, $angle ° nach links"
-    //%block.loc.fr="Conduisez $time secondes, $angle ° vers la gauche"
-    //%block.loc.it="Guida $time secondi, $angle ° a sinistra"
-    //% angle.min=1 angle.max=90
-    export function makeCuveLeft(angle: number, time: number) {
-        let runtime = time * 1000;
-        PaintRobotSimpel.left(angle);
-        basic.pause(runtime);
+    //%block
+    export function diferencialRight(angle: number, radius: number){
+        basic.showArrow(ArrowNames.East); 
+        servos.P0.run(outerPercent(angle, radius));
+        servos.P1.run(innerPercent(angle, radius));
+        basic.pause(driveTime(angle,radius))
     }
 
-    //%block="Drive aaa seconds, aaa ° right"
-    //%block.loc.de="Fahre $time Sekunden, $angle ° Rechts"
-    //%block.loc.fr="Conduisez aaa secondes, aaa ° à droite"
-    //%block.loc.it="Guida aaa secondi, aaa ° a destra"
-    //% angle.min=1 angle.max=90
-    export function makeCurveRight(angle: number, time: number): void {
-        let runtime = time * 1000;
-        PaintRobotSimpel.right(angle);
-        basic.pause(runtime);
+    function outerPercent(angle: number, radius: number): number{
+        //0.25/s => ~1km/h bei 1 Meter Radius
+        let angularVelocity = 0.25/radius;
+        let radiusWheelRoute = radius + (carWidth/2);
+
+        // meter / seconds
+        let velocity = angularVelocity * radiusWheelRoute;
+        
+        // 0.4712 m/s --> 100%
+        let percent = (velocity*100)/maxSpeed;
+        return percent;
+    }
+
+    function innerPercent(angle: number, radius: number): number{
+        //0.25/s => ~1km/h if radius = 1m
+        let angularVelocity = 0.25/radius;
+        let radiusWheelRoute = radius - (carWidth/2);
+
+        //meter/seconds
+        let velocity = angularVelocity * radiusWheelRoute;
+
+        // 0.4712 m/s --> 100%
+        let percent = (velocity*100)/maxSpeed;
+        return percent;
+    }
+
+    function driveTime(angle: number, radius: number){
+        //0.25/s => ~1km/h bei 1 Meter Radius
+        let angularVelocity = 0.25/radius;
+
+        //meter/seconds
+        let chalkVelocity = angularVelocity * radius;
+
+        let distance = (angle/360)*2*Math.PI*radius;
+        let time = distance/chalkVelocity;
+        let timeInms = time * 1000;
+
+        return timeInms;
     }
 }

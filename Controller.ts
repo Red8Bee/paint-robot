@@ -42,19 +42,19 @@ namespace Controller {
     }
 
     export function backToOrign(){
-        let goBackToThisDirection = PaintRobotSimpel.direction;
-        let angle = PaintRobotSimpel.angle;
+        let goBackToThisDirection = PaintRobot.direction;
+        let angle = PaintRobot.angle;
         let oldLeftAngle = 90 - angle;
         let oldRightAngle = 90 + angle;
          switch(goBackToThisDirection){
             case 0:
-                PaintRobotSimpel.left(oldLeftAngle);
+                PaintRobot.left(oldLeftAngle);
                 break;
             case 1:
-                PaintRobotSimpel.setAngleStraight();
+                PaintRobot.setAngleStraight();
                 break;
             case 2:
-                PaintRobotSimpel.right(oldRightAngle);
+                PaintRobot.right(oldRightAngle);
                 break;
         } 
     }

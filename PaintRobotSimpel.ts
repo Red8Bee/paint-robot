@@ -6,7 +6,7 @@
  * Custom blocks
  */
 //% weight=100 color=#4a0087 icon=""
-namespace PaintRobotSimpel {
+namespace PaintRobot {
     
    
     export let direction: number;
@@ -19,10 +19,10 @@ namespace PaintRobotSimpel {
     //%block.loc.it="Disegnare"
     export function drive(path: () => void) {
         Controller.configurReciver();
-        PaintRobotSimpel.setAngleStraight();
-        PaintRobotSimpel.go();
+        PaintRobot.setAngleStraight();
+        PaintRobot.go();
         path();
-        PaintRobotSimpel.stop();
+        PaintRobot.stop();
     }
 
     //%block="Drive"
@@ -42,7 +42,7 @@ namespace PaintRobotSimpel {
     }
 
     //%block="Turn steering $newAngle ° left"
-    //%block.loc.de="Lenkung ° links drehen "
+    //%block.loc.de="Lenkung $newAngle ° links drehen "
     //%block.loc.fr="tourner le volant $newAngle ° à gauche"
     //%block.loc.it="girare lo sterzo $newAngle ° sinistra"
     //% angle.min=1 angle.max=90
@@ -66,10 +66,10 @@ namespace PaintRobotSimpel {
         // basic.showNumber(2);
     }
 
-    //%block="Turn steering °right"
-    //%block.loc.de="Lenkung ° rechts drehen"
-    //%block.loc.fr="tourner le volant °à droite"
-    //%block.loc.it="girare lo sterzo °destra"
+    //%block="Turn steering $newAngle °right"
+    //%block.loc.de="Lenkung $newAngle ° rechts drehen"
+    //%block.loc.fr="tourner le volant $newAngle °à droite"
+    //%block.loc.it="girare lo sterzo $newAngle °destra"
     //% angle.min=1 angle.max=90
     export function right(newAngle: number): void {
          basic.showArrow(ArrowNames.East);
@@ -94,5 +94,43 @@ namespace PaintRobotSimpel {
     //%block.loc.it="Alza il gesso"
     export function penUp(): void{
         servos.P2.setAngle(185);
+    }
+
+    //%block="Drive straight ahead for $time seconds"
+    //%block.loc.de="Fahre geradeaus für $time Sekunden"
+    //%block.loc.fr="Continuez tout droit pendant $time secondes"
+    //%block.loc.it="Prosegui dritto per $time secondi"
+    //%advanced=true
+    export function driveStraightFor(time: number): void {
+        let runtime = time * 1000;
+        PaintRobot.setAngleStraight();
+        basic.pause(runtime);
+    }
+
+
+    //Advanced Comands
+
+    //%block="Drive $time seconds, $angle ° to the left"
+    //%block.loc.de="Fahr $time Sekunden, $angle ° nach links"
+    //%block.loc.fr="Conduisez $time secondes, $angle ° vers la gauche"
+    //%block.loc.it="Guida $time secondi, $angle ° a sinistra"
+    //% angle.min=1 angle.max=90
+    //%advanced=true
+    export function makeCuveLeft(angle: number, time: number) {
+        let runtime = time * 1000;
+        PaintRobot.left(angle);
+        basic.pause(runtime);
+    }
+
+    //%block="Drive $time  seconds, $angle ° right"
+    //%block.loc.de="Fahre $time Sekunden, $angle ° Rechts"
+    //%block.loc.fr="Conduisez $time secondes, $angle ° à droite"
+    //%block.loc.it="Guida $time secondi, $angle ° a destra"
+    //% angle.min=1 angle.max=90
+    //%advanced=true
+    export function makeCurveRight(angle: number, time: number): void {
+        let runtime = time * 1000;
+        PaintRobot.right(angle);
+        basic.pause(runtime);
     }
 }
