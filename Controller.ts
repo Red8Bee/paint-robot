@@ -9,10 +9,10 @@
 namespace Controller {
 
     //%block="Configure remote control"
-    //%block.loc.fr="Configurer la télécommande"
+    //%block.loc.fr="Configurez la télécommande"
     //%block.loc.it="Configura il telecomando"
     //%block.loc.de="Fernsteuerung konfigurieren"
-    export function configurSender(): void{
+    export function configureSender(): void{
         radio.setGroup(1);
         input.onButtonPressed(Button.A, function () {
             radio.sendString("left");
@@ -22,7 +22,7 @@ namespace Controller {
         });
     }
 
-    export function configurReciver(): void{
+    export function configureReciver(): void{
         radio.setGroup(1);
         radio.onReceivedString(function (receivedString: string) {
             if(receivedString.compare("left")){
