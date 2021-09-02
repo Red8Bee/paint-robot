@@ -17,10 +17,8 @@ namespace differencial{
     export let leftPull = 6.5;
     //right Pull
     export let rightPull = 0;
-    let angleTimeMatcher = 0.56;
-    let calculationTime = 0; 
-    let calculationStart = 0;
-    let calculationStop = 0;
+    let angleTimeMatcher = 0.48;
+
 
     let functionEnteredOn: number = 0;
     let stop = true;
@@ -41,16 +39,18 @@ namespace differencial{
     //%block
     //% angle.min=1 angle.max=360 angle.defl=1
     //% radius.min=1 radius.max=50 radius.defl=0.1
-    export function differentialLeft(angle: number = 1, radius: number = 1) {
+    export function differentialLeft(angle: number, radius: number) {
         let innerRadius = radius - halveCarWidth;
         let outerRadius = radius + halveCarWidth;
         let outerPath = getPath(outerRadius, angle);
         let innerPath = getPath(innerRadius, angle);
         let chalkpath = getPath(radius, angle);
         let time = driveTime(chalkpath);
-        let matchedTime = driveTime(getPath(radius, angle * angleTimeMatcher));
-        let leftPercent = percentNew(innerPath, time) - leftPull
-        let rightPercent = percentNew(outerPath, time) - rightPull
+        let matchedTime = driveTime(getPath(radius, angle*0.6));
+        let leftPercent = percentNew(innerPath, time);
+        let rightPercent = percentNew(outerPath, time) + leftPull
+        serial.writeLine(leftPercent.toString());
+        serial.writeLine(rightPercent.toString())
         driveChekStopAndConfig(matchedTime, leftPercent, rightPercent);
     }
 
@@ -109,18 +109,24 @@ namespace differencial{
     }
 
     function driveTime(path: number): number{
-        // serial.writeLine("streke: " + path)
+        serial.writeLine("streke: " + path)
         let time = path/chalkSpeed;
-        // serial.writeLine("zeit: " + time)
+        serial.writeLine("zeit: " + time)
         return time;
     }
 
     function driveChekStopAndConfig(time: number, motor1: number, motor2: number) {
-        basic.pause(1000);        
-        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
-        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
-        basic.pause((time * 1000) - calculationTime);
-        // Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor1);
-        // Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor2);
+        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Reverse, motor2);
+        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Reverse, motor1);
+        while(time>0){
+            if(time<1){
+                basic.pause(time*1000);
+                time = 0;
+            }
+            else{
+                basic.pause(1000);
+                time = time-1;
+            }
+        }
     }
 }
