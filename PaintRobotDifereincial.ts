@@ -13,8 +13,8 @@ namespace differencial{
     let maxSpeed = 0.3;
     //speed of the Chalk 0.2 m/s
     let chalkSpeed = 0.2;
-    //left Pull
-    export let leftPull = 6.5;
+    //left Pull 6.5
+    export let leftPull = 0;
     //right Pull
     export let rightPull = 0;
     let angleTimeMatcher = 0.48;
