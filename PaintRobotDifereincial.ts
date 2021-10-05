@@ -2,7 +2,7 @@
  * Custom blocks
  */
 //% weight=100 color=#4a0087 icon=""
-namespace differencial{
+namespace malroboter{
     // witdth of car in m
     let halveCarWidth = 0.25;
     //max drive Speed in m/s
@@ -32,9 +32,9 @@ namespace differencial{
     }
 
     //%block="Drive Left with an angle of $angle ° and a Radius of $radius m"
+    //%block.loc.de="Fahr links mit einem Winkel von $angle ° und einem Radius von $radius m"
     //%block.loc.it="Guida a sinistra con un angolo di $angle ° e un raggio di $radius m"
     //%block.loc.fr="Conduire à gauche avec un angle de $angle ° et un rayon de $radius m"
-    //%block.loc.de="Fahr links mit einem Winkel von $Winkel ° und einem Radius von $Radius m"
     //% angle.min=1 angle.max=360 angle.defl=1
     //% radius.min=1 radius.max=50 radius.defl=0.1
     export function differentialLeft(angle: number, radius: number) {
@@ -54,7 +54,7 @@ namespace differencial{
     //%block="Drive right with an angle of $angle ° and a Radius of $radius m"
     //%block.loc.it="Guida a destra con un angolo di $angle ° e un raggio di $radius m"
     //%block.loc.fr=="Conduire à droite avec un angle de $angle ° et un rayon de $radius m"
-    //%block.loc.de="Fahr rechts mit einem Winkel von $Winkel ° und einem Radius von $Radius m"
+    //%block.loc.de="Fahr rechts mit einem Winkel von $angle ° und einem Radius von $radius m"
     //% angle.min=1 angle.max=360 angle.defl=1
     //% radius.min=1 radius.max=50 radius.defl=0.1
     export function differentialRight(angle: number, radius: number) {
