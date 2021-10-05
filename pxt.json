@@ -12,9 +12,6 @@
         "main.blocks",
         "main.ts",
         "README.md",
-        "PaintRobotComplex.ts",
-        "Controller.ts",
-        "PaintRobot.ts",
         "Configurer.ts",
         "PaintRobotDifereincial.ts"
     ],
@@ -28,5 +25,5 @@
     "supportedTargets": [
         "microbit"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
