@@ -36,7 +36,7 @@ namespace drawRobot {
     //%block.loc.it="A sinistra(Angolo: $angle °, Raggio: $cmradius cm)"
     //%block.loc.fr="À gauche(Angle: $angle °, Rayon: $cmradius cm)"
     //% angle.min=1 angle.max=360 angle.defl=90
-    //% cmradius.min=10 cmradius.max=1000 cmradius.defl=100
+    //% cmradius.min=10 cmradius.max=1000 cmradius.defl=10
     export function left(angle: number, cmradius: number) {
         let radius = cmradius / 100;
         let innerRadius = radius - halveCarWidth;
@@ -75,10 +75,10 @@ namespace drawRobot {
         driveChekStopAndConfig(matchedTime, leftPercent, rightPercent);
     }
 
-    //%block="Straight ahead(Time: $time sek)"
+    //%block="Straight ahead(Time: $time sec)"
     //%block.loc.it="Dritto davanti(Tempo: $time sek)"
-    //%block.loc.fr="Tout droit(Temps: $time sek)"
-    //%block.loc.de="Geradeaus(Zeit: $time sek)"
+    //%block.loc.fr="Tout droit(Temps: $time sec)"
+    //%block.loc.de="Geradeaus(Zeit: $time sec)"
     //% time.min=0 time.max=60 time.defl=1
     export function straight(time: number) {
         isStraight = true;
