@@ -13,7 +13,7 @@
         "main.ts",
         "README.md",
         "Configurer.ts",
-        "PaintRobotDifereincial.ts"
+        "Draw-Robot.ts"
     ],
     "testFiles": [
         "test.ts"
@@ -25,5 +25,5 @@
     "supportedTargets": [
         "microbit"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
