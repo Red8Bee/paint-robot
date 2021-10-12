@@ -12,7 +12,6 @@
         "main.blocks",
         "main.ts",
         "README.md",
-        "Configurer.ts",
         "Draw-Robot.ts"
     ],
     "testFiles": [
