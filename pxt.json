@@ -13,8 +13,8 @@
         "main.ts",
         "README.md",
         "Draw-Robot.ts",
-        "_locales/en/Paint Robot-strings.json",
-        "_locales/en/Paint Robot-jsdoc-strings.json"
+        "_locales/en/Paint-Robot-strings.json",
+        "_locales/en/Paint-Robot-jsdoc-strings.json"
     ],
     "testFiles": [
         "test.ts"
