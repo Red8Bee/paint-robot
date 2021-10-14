@@ -1,5 +1,5 @@
 {
-    "name": "Paint Robot",
+    "name": "draw-robot",
     "description": "",
     "dependencies": {
         "core": "*",
@@ -13,10 +13,10 @@
         "main.ts",
         "README.md",
         "Draw-Robot.ts",
-        "_locales/en/Paint-Robot-strings.json",
-        "_locales/en/Paint-Robot-jsdoc-strings.json",
-        "_locales/de/Paint-Robot-strings.json",
-        "_locales/de/Paint-Robot-jsdoc-strings.json"
+        "_locales/en/draw-robot-strings.json",
+        "_locales/en/draw-robot-jsdoc-strings.json",
+        "_locales/de/draw-robot-strings.json",
+        "_locales/de/draw-robot-jsdoc-strings.json"
     ],
     "testFiles": [
         "test.ts"
