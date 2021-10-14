@@ -9,12 +9,14 @@
         "pxt-kitronik-robotics-board": "github:kitronikltd/pxt-kitronik-robotics-board#v0.0.5"
     },
     "files": [
-        "main.blocks",
-        "main.ts",
-        "README.md",
-        "Draw-Robot.ts",
-        "_locales/en/Paint-Robot-strings.json",
-        "_locales/en/Paint-Robot-jsdoc-strings.json"
+      "main.blocks",
+      "main.ts",
+      "README.md",
+      "Draw-Robot.ts",
+      "_locales/en/Paint-Robot-strings.json",
+      "_locales/en/Paint-Robot-jsdoc-strings.json",
+      "_locales/de/Paint-Robot-strings.json",
+      "_locales/de/Paint-Robot-jsdoc-strings.json"
     ],
     "testFiles": [
         "test.ts"
