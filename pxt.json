@@ -12,7 +12,8 @@
         "main.blocks",
         "main.ts",
         "README.md",
-        "Draw-Robot.ts"
+        "Draw-Robot.ts",
+        "_locales/en/Paint Robot-strings.json",
     ],
     "testFiles": [
         "test.ts"
