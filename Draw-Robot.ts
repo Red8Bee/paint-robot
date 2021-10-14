@@ -41,8 +41,8 @@ namespace drawRobot {
         let time = driveTime(chalkpath);
         let mChalkpath = getPath(radius, angle * angleTimeMatcher)
         let matchedTime = driveTime(mChalkpath);
-        let leftPercent = percentNew(innerPath, time) - leftPull;
-        let rightPercent = percentNew(outerPath, time);
+        let leftPercent = getPercent(innerPath, time) - leftPull;
+        let rightPercent = getPercent(outerPath, time);
         isStraight = false;
         driveChekStopAndConfig(matchedTime, leftPercent, rightPercent);
     }
@@ -60,8 +60,8 @@ namespace drawRobot {
         let time = driveTime(chalkpath);
         let mChalkpath = getPath(radius, angle * angleTimeMatcher)
         let matchedTime = driveTime(mChalkpath);
-        let leftPercent = percentNew(innerPath, time) - leftPull;
-        let rightPercent = percentNew(outerPath, time);
+        let leftPercent = getPercent(innerPath, time) - leftPull;
+        let rightPercent = getPercent(outerPath, time);
         isStraight = false;
         driveChekStopAndConfig(matchedTime, leftPercent, rightPercent);
     }
@@ -80,27 +80,11 @@ namespace drawRobot {
         return sectorLength;
     }
 
-    function percentNew(path: number, time: number) {
+    function getPercent(path: number, time: number) {
         let speed = path / time;
         let percent = (speed * 100) / maxSpeed;
         return percent;
     }
-
-    // function innerPercent(radius: number):number{
-    //     let angularV = chalkSpeed / radius;
-    //     let innerRadius = radius - halveCarWidth;
-    //     let speed = angularV*innerRadius;
-    //     let percent = (speed*100)/maxSpeed;
-    //     return percent;
-    // }
-
-    // function outerPercent(radius: number): number {
-    //     let angularV = chalkSpeed / radius;
-    //     let outerRadius = radius + halveCarWidth;
-    //     let speed = angularV * outerRadius;
-    //     let percent = (speed * 100) / maxSpeed;
-    //     return percent;
-    // }
 
     function driveTime(path: number): number {
         let time = path / chalkSpeed;
