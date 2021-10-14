@@ -10,25 +10,41 @@ namespace drawRobot {
     //speed of the Chalk 0.2 m/s
     let chalkSpeed = 0.15;
     //left Pull 6.5
-    export let leftPull = 3.25;
+    export let leftPull = 6;
     //right Pull
     export let rightPull = 0;
     let angleTimeMatcher = 0.4;
 
 
-    let stop = true;
+    let stop = false;
+    let stoped = false;
     let isStraight = false;
+    let rampUpFinished = false;
+    let steerLeft = false;
+    let steerRight = false;
 
-    //%block
-    export function drive(path: () => void) {
-        radio.setGroup(1);
+    //%block="Drive(Radio Group: $radioGroup )"
+    export function drive(radioGroup: number,path: () => void) {
+        radio.setGroup(radioGroup);
+        radio.onReceivedString(receivedString => {
+            if (receivedString == "stop") {
+                stop = !stop;
+                stoped = true;
+            }
+            if (receivedString == "left") {
+                steerLeft = true;
+            }
+            if (receivedString == "right") {
+                steerRight = true;
+            }
+        })
         path();
         Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor1);
         Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor2);
         basic.showIcon(IconNames.Skull);
     }
 
-    //%block
+    //%block="Left(Angle: $angle °, Radius:  $cmradius cm)"
     //% angle.min=1 angle.max=360 angle.defl=90
     //% cmradius.min=10 cmradius.max=1000 cmradius.defl=10
     export function left(angle: number, cmradius: number) {
@@ -47,7 +63,7 @@ namespace drawRobot {
         driveChekStopAndConfig(matchedTime, leftPercent, rightPercent);
     }
 
-    //%block
+    //%block="Right(Angle: $angle °, Radius $cmradius cm)"
     //% angle.min=1 angle.max=360 angle.defl=90
     //% cmradius.min=10 cmradius.max=1000 cmradius.defl=10
     export function right(angle: number, cmradius: number) {
@@ -66,7 +82,7 @@ namespace drawRobot {
         driveChekStopAndConfig(matchedTime, leftPercent, rightPercent);
     }
 
-    //%block
+    //%block="Straight ahead(Time: $time sec)"
     //% time.min=0 time.max=60 time.defl=1
     export function straight(time: number) {
         isStraight = true;
@@ -90,44 +106,55 @@ namespace drawRobot {
         let time = path / chalkSpeed;
         return time;
     }
+    function getRampupStep(motorToChek: number, checkerMotor: number){
+        let rampUpStep = 0;
+        if(motorToChek>checkerMotor){
+            rampUpStep = motorToChek/checkerMotor;
+        }
+        else{
+            rampUpStep = 1;
+        }   
+        return rampUpStep;
+    }
 
     function driveChekStopAndConfig(time: number, motor1: number, motor2: number) {
-        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
-        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
-        let stoped = false;
+        
         let orgMotor1 = motor1;
-        let orgMotor2 = motor2
-
-        radio.onReceivedString(receivedString => {
-            if (receivedString == "stop") {
-                stop = !stop;
-                stoped = true;
+        let orgMotor2 = motor2;
+        let m1Step = getRampupStep(motor1,motor2);
+        let m2Step = getRampupStep(motor2,motor1);
+        let m1Ramp = 0;
+        let m2Ramp = 0;
+        let startTime = input.runningTime()/1000
+        let endTime = 0;
+        while(!rampUpFinished){
+            m1Ramp += 5*m1Step;
+            m2Ramp += 5*m2Step;
+            Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, m1Ramp);
+            Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, m2Ramp);
+            basic.pause(100);
+            if(motor1-m1Ramp<5||motor2-m2Ramp<5){
+                rampUpFinished= true;
             }
-        })
-
+            endTime= input.runningTime()/1000;
+        }
+        let passedTime = endTime-startTime;
+        time = time - passedTime;
         while (time > 0) {
+            Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
+            Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
             if (stop) {
-                radio.onReceivedString(receivedString => {
-                    if (receivedString == "stop") {
-                        stop = !stop;
-                        stoped = true;
-                    }
-                    if (receivedString == "left") {
-                        motor1 = motor1 - (orgMotor1 * 0.5);
-                        motor2 = orgMotor2
-                        stoped = true;
-                    }
-                    if (receivedString == "right") {
-                        motor1 = orgMotor2;
-                        motor2 = motor2 - (orgMotor2 * 0.5);
-                        stoped = true;
-                    }
-                })
                 Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor1);
                 Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor2);
                 basic.pause(250);
                 stoped = true;
             } else {
+                if(steerLeft){
+
+                }
+                if(steerRight){
+
+                }
                 if (stoped) {
                     Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
                     Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
