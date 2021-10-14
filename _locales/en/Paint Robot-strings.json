@@ -1,0 +1,7 @@
+{
+  "drawRobot.drive|block": "Dwive",
+  "drawRobot.left|block": "Weft(Angle: $angle °, Radius:  $cmradius cm)",
+  "drawRobot.right|block": "Wight(Angle: $angle °, Radius $cmradius cm)",
+  "drawRobot.straight|block": "Stwaight ahead(Time: $time sec)",
+  "{id:category}DrawRobot": "Dwawwobot"
+}
