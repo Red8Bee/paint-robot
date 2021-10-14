@@ -19,10 +19,7 @@ namespace drawRobot {
     let stop = true;
     let isStraight = false;
 
-    //%block="Drive"
-    //%block.loc.de="Fahr"
-    //%block.loc.fr="Conduire"
-    //%block.loc.it="Guidare"
+    //%block
     export function drive(path: () => void) {
         radio.setGroup(1);
         path();
@@ -31,10 +28,7 @@ namespace drawRobot {
         basic.showIcon(IconNames.Skull);
     }
 
-    //%block="Left(Angle: $angle °, Radius:  $cmradius cm)"
-    //%block.loc.de="Links(Winkel: $angle °, Radius: $cmradius cm)"
-    //%block.loc.it="A sinistra(Angolo: $angle °, Raggio: $cmradius cm)"
-    //%block.loc.fr="À gauche(Angle: $angle °, Rayon: $cmradius cm)"
+    //%block
     //% angle.min=1 angle.max=360 angle.defl=90
     //% cmradius.min=10 cmradius.max=1000 cmradius.defl=10
     export function left(angle: number, cmradius: number) {
@@ -53,10 +47,7 @@ namespace drawRobot {
         driveChekStopAndConfig(matchedTime, leftPercent, rightPercent);
     }
 
-    //%block="Right(Angle: $angle °, Radius $cmradius cm)"
-    //%block.loc.it="A destra(Angolo: $angle °, Raggio $cmradius cm)"
-    //%block.loc.fr=="À droite(Angle: $angle °, Rayon $cmradius cm)"
-    //%block.loc.de="Rechts(Winkel: $angle °, Radius: $cmradius cm)"
+    //%block
     //% angle.min=1 angle.max=360 angle.defl=90
     //% cmradius.min=10 cmradius.max=1000 cmradius.defl=10
     export function right(angle: number, cmradius: number) {
@@ -75,10 +66,7 @@ namespace drawRobot {
         driveChekStopAndConfig(matchedTime, leftPercent, rightPercent);
     }
 
-    //%block="Straight ahead(Time: $time sec)"
-    //%block.loc.it="Dritto davanti(Tempo: $time sek)"
-    //%block.loc.fr="Tout droit(Temps: $time sec)"
-    //%block.loc.de="Geradeaus(Zeit: $time sec)"
+    //%block
     //% time.min=0 time.max=60 time.defl=1
     export function straight(time: number) {
         isStraight = true;
