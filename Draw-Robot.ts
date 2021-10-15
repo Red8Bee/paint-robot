@@ -140,20 +140,38 @@ namespace drawRobot {
         }
         let passedTime = endTime-startTime;
         time = time - passedTime;
+        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
+        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
         while (time > 0) {
-            Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
-            Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
-            if (stop) {
+             if (stop) {
                 Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor1);
                 Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor2);
                 basic.pause(250);
                 stoped = true;
             } else {
                 if(steerLeft){
-
+                    Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor1);
+                    basic.showNumber(1);
+                    motor1 = motor1-25;
+                    motor2 = motor2+25;
+                    steerLeft = false;
+                    Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
+                    Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
                 }
                 if(steerRight){
-
+                    Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor2);
+                    basic.showNumber(2);
+                    motor1 = motor1+25;
+                    motor2 = motor2-25;
+                    steerRight = false;
+                    Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
+                    Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
+                }
+                if(motor1>100){
+                    motor1=100;
+                }
+                if(motor2>100){
+                    motor2 = 100;
                 }
                 if (stoped) {
                     Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
@@ -167,7 +185,7 @@ namespace drawRobot {
                 else {
                     basic.pause(1000);
                     time = time - 1;
-                }
+                }     
             }
         }
     }
