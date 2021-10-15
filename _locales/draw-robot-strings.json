@@ -1,5 +1,5 @@
 {
-  "drawRobot.drive|block": "Drive(Radio Group: $radioGroup )",
+  "drawRobot.drive|block": "Drive(Radio Group: $radioGroup)",
   "drawRobot.left|block": "Left(Angle: $angle °, Radius:  $cmradius cm)",
   "drawRobot.right|block": "Right(Angle: $angle °, Radius $cmradius cm)",
   "drawRobot.straight|block": "Straight ahead(Time: $time sec)",
