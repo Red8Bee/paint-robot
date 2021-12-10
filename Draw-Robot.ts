@@ -22,7 +22,7 @@ namespace drawRobot {
     let rampUpFinished = false;
     let steerLeft = false;
     let steerRight = false;
-
+    let next = false;
     //%block="Drive(Radio Group: $radioGroup )"
     export function drive(radioGroup: number,path: () => void) {
         radio.setGroup(radioGroup);
@@ -36,6 +36,9 @@ namespace drawRobot {
             }
             if (receivedString == "right") {
                 steerRight = true;
+            }
+            if(receivedString=="next"){
+                next = true;
             }
         })
         path();
@@ -117,28 +120,34 @@ namespace drawRobot {
         return rampUpStep;
     }
 
+    function rampUp(motor1: number, motor2:number):number{
+        let m1Step = getRampupStep(motor1, motor2);
+        let m2Step = getRampupStep(motor2, motor1);
+        let m1Ramp = 0;
+        let m2Ramp = 0;
+        let endTime = 0;
+
+        m1Ramp += 5 * m1Step;
+        m2Ramp += 5 * m2Step;
+        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, m1Ramp);
+        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, m2Ramp);
+        basic.pause(100);
+        if (motor1 - m1Ramp < 5 || motor2 - m2Ramp < 5) {
+            rampUpFinished = true;
+        }
+        endTime = input.runningTime() / 1000;
+        
+        return endTime;
+    }
+
     function driveChekStopAndConfig(time: number, motor1: number, motor2: number) {
         
         let orgMotor1 = motor1;
         let orgMotor2 = motor2;
-        let m1Step = getRampupStep(motor1,motor2);
-        let m2Step = getRampupStep(motor2,motor1);
-        let m1Ramp = 0;
-        let m2Ramp = 0;
+        
         let startTime = input.runningTime()/1000
-        let endTime = 0;
-        while(!rampUpFinished){
-            m1Ramp += 5*m1Step;
-            m2Ramp += 5*m2Step;
-            Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, m1Ramp);
-            Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, m2Ramp);
-            basic.pause(100);
-            if(motor1-m1Ramp<5||motor2-m2Ramp<5){
-                rampUpFinished= true;
-            }
-            endTime= input.runningTime()/1000;
-        }
-        let passedTime = endTime-startTime;
+        let timeNeededToRampUp = rampUp(motor1,motor2);
+        let passedTime = timeNeededToRampUp-startTime;
         time = time - passedTime;
         Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
         Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
@@ -149,43 +158,48 @@ namespace drawRobot {
                 basic.pause(250);
                 stoped = true;
             } else {
-                if(steerLeft){
-                    Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor1);
-                    basic.showNumber(1);
-                    motor1 = motor1-25;
-                    motor2 = motor2+25;
-                    steerLeft = false;
-                    Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
-                    Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
+                if(!next){
+                    if (steerLeft) {
+                        Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor1);
+                        basic.showNumber(1);
+                        motor1 = motor1 - 25;
+                        motor2 = motor2 + 25;
+                        steerLeft = false;
+                        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
+                        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
+                    }
+                    if (steerRight) {
+                        Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor2);
+                        basic.showNumber(2);
+                        motor1 = motor1 + 25;
+                        motor2 = motor2 - 25;
+                        steerRight = false;
+                        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
+                        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
+                    }
+                    if (motor1 > 100) {
+                        motor1 = 100;
+                    }
+                    if (motor2 > 100) {
+                        motor2 = 100;
+                    }
+                    if (stoped) {
+                        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
+                        Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
+                        stoped = false;
+                    }
+                    if (time < 1) {
+                        basic.pause(time * 1000);
+                        time = 0;
+                    }
+                    else {
+                        basic.pause(1000);
+                        time = time - 1;
+                    }
                 }
-                if(steerRight){
-                    Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor2);
-                    basic.showNumber(2);
-                    motor1 = motor1+25;
-                    motor2 = motor2-25;
-                    steerRight = false;
-                    Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
-                    Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
-                }
-                if(motor1>100){
-                    motor1=100;
-                }
-                if(motor2>100){
-                    motor2 = 100;
-                }
-                if (stoped) {
-                    Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
-                    Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
-                    stoped = false;
-                }
-                if (time < 1) {
-                    basic.pause(time * 1000);
-                    time = 0;
-                }
-                else {
-                    basic.pause(1000);
-                    time = time - 1;
-                }     
+                else{
+                    time = time -10000000;
+                }                     
             }
         }
     }
