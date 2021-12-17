@@ -159,19 +159,15 @@ namespace drawRobot {
                 stoped = true;
             } else {
                 if (steerLeft) {
-                    Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor1);
-                    basic.showNumber(1);
-                    motor1 = motor1 - 25;
-                    motor2 = motor2 + 25;
+                    motor1 = motor1 - 5;
+                    motor2 = motor2 + 5;
                     steerLeft = false;
                     Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
                     Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
                 }
                 if (steerRight) {
-                    Kitronik_Robotics_Board.motorOff(Kitronik_Robotics_Board.Motors.Motor2);
-                    basic.showNumber(2);
-                    motor1 = motor1 + 25;
-                    motor2 = motor2 - 25;
+                    motor1 = motor1 + 5;
+                    motor2 = motor2 - 5;
                     steerRight = false;
                     Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor1, Kitronik_Robotics_Board.MotorDirection.Forward, motor1);
                     Kitronik_Robotics_Board.motorOn(Kitronik_Robotics_Board.Motors.Motor2, Kitronik_Robotics_Board.MotorDirection.Forward, motor2);
@@ -192,8 +188,8 @@ namespace drawRobot {
                     time = 0;
                 }
                 else {
-                    basic.pause(1000);
-                    time = time - 1;
+                    basic.pause(500);
+                    time = time - 0.5;
                 }                               
             }
         }
